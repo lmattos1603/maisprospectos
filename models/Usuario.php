@@ -19,7 +19,7 @@
             $sql->execute();
 
             $resultado = $sql->get_result();
-            if($resultado->num_rows() === 0){
+            if($resultado->num_rows === 0){
                 $this->login = null;
                 $this->nome = null;
                 $this->email = null;
@@ -35,6 +35,8 @@
                 }
             }
             $sql->close();
+            $conexaoDB->close();
+            return $this->logado;
         }
         private function conectarBanco(){
             $conn = new \mysqli('localhost', 'root', 'prospects');
