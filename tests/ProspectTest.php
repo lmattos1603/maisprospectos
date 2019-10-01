@@ -18,13 +18,33 @@ class ProspectTest extends TestCase{
         );
         unset($prospect);
     }
-    /** @test */
+/** @test */
+    public function testEditarProspect(){
+        $prospect = new Prospect();
+        
+        $this->assertEquals(
+            TRUE,
+            $prospect->EditarProspect('Lucas', '09473051905', 'lucas@mail.com', '49998058418', '49998058418', 'Prolongamento Salgado Filho', '1276', 'Lucas Mattos', 'centro', 'Caçador', 'SC', '89509042', '1')
+        );
+        unset($prospect);
+    }
+/** @test */
+    public function testBuscarProspect(){
+        $prospect = new Prospect();
+        
+        $this->assertEquals(
+            TRUE,
+            $prospect->BuscarProspect('lucas@mail.com')
+        );
+        unset($prospect);
+    }
+/** @test */
     public function testDeletarProspect(){
         $prospect = new Prospect();
         
         $this->assertEquals(
             TRUE,
-            $prospect->deletarProspect('8')
+            $prospect->DeletarProspect('1')
         );
         unset($prospect);
     }
