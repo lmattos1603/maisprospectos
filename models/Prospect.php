@@ -20,7 +20,7 @@ class Prospect{
         public function inserirProspect($nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep){
             $conexaoDB = $this->conectarBanco(); // recebe um objeto de conexão.
 
-            $sqlInsert = $conexaoDB->prepare("insert into prospecto  
+            $sqlInsert = $conexaoDB->prepare("insert into prospect  
                                             (nome, cpf, email, telefone, whatsapp, rua, numero, facebook, bairro, cidade, estado, cep)
                                             values
                                             (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");  // recebe os dados sem abrir brecha para SQLInjection.
@@ -53,7 +53,7 @@ class Prospect{
             }else{
                 $retorno = FALSE;
             }
-            $sqlInsert->close(); // fecha o sql.
+            $sqlUpdate->close(); // fecha o sql.
             $conexaoDB->close(); // fecha a conexão.
             return $retorno;
         }
@@ -105,7 +105,7 @@ class Prospect{
         public function deletarProspect($id){
             $conexaoDB = $this->conectarBanco(); // recebe um objeto de conexão.
 
-            $sqlDelete = $conexaoDB->prepare("delete from prospecto
+            $sqlDelete = $conexaoDB->prepare("delete from prospect
                                             where 
                                             id = ?");  // recebe os dados sem abrir brecha para SQLInjection.
             $sqlDelete->bind_param("i", $id);
