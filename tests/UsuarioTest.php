@@ -11,6 +11,16 @@ use DAO\DAOUsuario;
 
 class UsuarioTest extends TestCase{
     /** @test */
+    public function testIncluirUsuario(){
+        $daoUsuario = new DAOUsuario();
+        
+        $this->assertEquals(
+            TRUE,
+            $daoUsuario->incluirUsuario('Lucas', 'lmattos', '123', 'lmattos@mail.com', '123456')
+        );
+        unset($usuario);
+    }
+    /** @test */
     public function testLogar(){  // função para testar o login.
         $usuario = new Usuario(); // cria um novo usuario.
         $daoUsuario = new DAOUsuario();
