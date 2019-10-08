@@ -94,7 +94,12 @@ class DAOProspect{
         $conexaoDB->close(); // fecha a conexão.
         return $retorno;
     }
-
+    /**
+     * Faz o login do usuário no sistema e retorna um objeto usuario
+     * @param string $login Login do usuário
+     * @param string $senha Senha do usuário
+     * @return Usuario retorna um objeto com os dados
+     */
     public function buscarProspect($email=null){
         $conexaoDB = $this->conectarBanco();// conecta com o banco.
         $prospects = array();
