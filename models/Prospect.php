@@ -17,15 +17,22 @@ class Prospect{
         public $cep;
 
         /**
-         * Carrega os atributos da classe 
-         * @param string $nome Nome do usuário
-         * @param string $login Login do usuário
-         * @param string $email Email do usuário
-         * @param string $celular Celular do usuário
-         * @param boolean $logado Status do usuário no sistema
-         * @return void
+         * Carrega os atributos da classe
+         * @param string $nome Nome do Prospecto
+         * @param string $cpf CPF do Prospecto
+         * @param string $email E-mail do Prospecto
+         * @param string $telefone Telefone do Prospecto
+         * @param string $whatsapp WhatsApp do Prospecto
+         * @param string $rua Endereço do Prospecto
+         * @param string $numero Número da casa ou apartamento
+         * @param string $facebook Facebook do Prospecto
+         * @param string $bairro Bairro que o Prospecto mora
+         * @param string $cidade Cidade que o Prospecto mora
+         * @param string $estado Estado que o Prospecto mora
+         * @param string $cep CEP da cidade ou endereço do Prospecto
+         * @param int $id Id do Prospecto a ser editado
          */
-        public function addUsuario($id, $nome, $login, $email, $telefone, $whatsapp){
+        public function addUsuario($id, $nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep){
             $this->id = $id;
             $this->nome = $nome;
             $this->cpf = $cpf;
