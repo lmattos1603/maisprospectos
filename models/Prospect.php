@@ -32,7 +32,7 @@ class Prospect{
          * @param string $cep CEP da cidade ou endereço do Prospecto
          * @param int $id Id do Prospecto a ser editado
          */
-        public function addUsuario($id, $nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep){
+        public function addProspecto($id, $nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep){
             $this->id = $id;
             $this->nome = $nome;
             $this->cpf = $cpf;
@@ -46,6 +46,7 @@ class Prospect{
             $this->cidade = $cidade;
             $this->estado = $estado;
             $this->cep = $cep;
+            @print_r($nome."|".$facebook);
         }
     }
 ?>

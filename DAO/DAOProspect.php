@@ -95,13 +95,16 @@ class DAOProspect{
         return $retorno;
     }
     /**
-     * Faz o login do usuário no sistema e retorna um objeto usuario
-     * @param string $login Login do usuário
-     * @param string $senha Senha do usuário
-     * @return Usuario retorna um objeto com os dados
+     * Faz a busca de um Prospecto pelo seu email cadastrado no sistema
+     * @param string $email E-mail do Prospecto
+     * @return Prospect retorna um array de objetos com os dados do Prospecto
      */
     public function buscarProspect($email=null){
-        $conexaoDB = $this->conectarBanco();// conecta com o banco.
+        try{
+            $conexaoDB = $this->conectarBanco(); // recebe um objeto de conexão.
+        }catch(\Exception $e){
+            die($e->getMessage());
+        }
         $prospects = array();
 
         if($email === null){
@@ -121,27 +124,17 @@ class DAOProspect{
 
         if($resultado->num_rows !== 0){ // se o resultado for diferente de 0 os atributos não serão null.
             while($linha = $resultado->fetch_assoc()){ // as variáveis receberão um array com as informações.
-                $prospect = array(
-                    "id" => $linha['nome'],
-                    "cpf" => $linha['cpf'],
-                    "email" => $linha['email'],
-                    "telefone" => $linha['telefone'],
-                    "whatsapp" => $linha['whatsapp'],
-                    "rua" => $linha['rua'],
-                    "numero" => $linha['numero'],
-                    "facebook" => $linha['facebook'],
-                    "bairro" => $linha['bairro'],
-                    "cidade" => $linha['cidade'],
-                    "estado" => $linha['estado'],
-                    "cep" => $linha['cep']
-                );
-                $prospects[] = $prospect; 
+                $prospect = new Prospect();
+                $prospect->addProspecto($linha['id'], $linha['nome'], $linha['cpf'], $linha['email'],
+                                   $linha['telefone'], $linha['whatsapp'], $linha['rua'], $linha['numero'], 
+                                   $linha['facebook'],$linha['bairro'], $linha['cidade'], $linha['estado'],$linha['cep']);
+                $prospects[] = $prospect;
             }
         }
-
+        
         $sqlBusca->close(); // fecha o sql.
         $conexaoDB->close(); // fecha a conexão.
-        return $prospects; // retorna se está logado ou não.
+        return $prospects; 
     }
 
     public function deletarProspect($id){
