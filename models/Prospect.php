@@ -46,7 +46,6 @@ class Prospect{
             $this->cidade = $cidade;
             $this->estado = $estado;
             $this->cep = $cep;
-            @print_r($nome."|".$facebook);
         }
     }
 ?>

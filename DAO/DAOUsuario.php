@@ -1,8 +1,10 @@
 <?php
     namespace DAO;
     mysqli_report(MYSQLI_REPORT_STRICT);
+    $separador = DIRECTORY_SEPARATOR;
+    $root = $_SERVER['DOCUMENT_ROOT'].$separador;
 
-    require_once('../models/Usuario.php');
+    require_once($root.'maisprospectos/models/Usuario.php');
     use MODELS\Usuario;
     
     /**
@@ -86,9 +88,9 @@
          * @return \mysqli Retorna um objeto do MySQLi
          */
         private function conectarBanco(){ // cria um objeto (que é uma conexão com o Banco).
-            define('DS', DIRECTORY_SEPARATOR);
-            define('BASE_DIR', dirname(__FILE__).DS);
-            require_once(BASE_DIR.'config.php');
+            $separador = DIRECTORY_SEPARATOR;
+            $root = $_SERVER['DOCUMENT_ROOT'].$separador;
+            require_once($root.'maisprospectos/DAO/config.php');
 
             try{
                 $conn = new \mysqli($dbhost, $user, $senha, $banco);

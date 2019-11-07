@@ -1,100 +1,85 @@
 <?php
 namespace CONTROLLERS;
-require_once('../DAO/DAOProspect.php');
+require('../DAO/DAOProspect.php');
 use DAO\DAOProspect;
 /**
  * Esta classe é responsável por fazer o tratamento dos dados para apresentação e/ou
- * envio para a DAO
- * Seu escopo limita-se às funções da entidade Prospect
+ * envio para a DAO executar as consultas no banco de dados.
+ * Seu escopo se limita às funções da entidade prospect.
  *
- * @author Lucas de Mattos
+ * @author Paulo Roberto Córdova
+ *
  */
 class ControllerProspect{
    /**
-    * Recebe e trata os dados do prospect e envia para a DAO
-    * gravar no banco de dados
-    * @param string $nome Nome do Prospecto
-    * @param string $cpf CPF do Prospecto
-    * @param string $email E-mail do Prospecto
-    * @param string $telefone Telefone do Prospecto
-    * @param string $whatsapp WhatsApp do Prospecto
-    * @param string $rua Endereço do Prospecto
-    * @param string $numero Número da casa ou apartamento
-    * @param string $facebook Facebook do Prospecto
-    * @param string $bairro Bairro que o Prospecto mora
-    * @param string $cidade Cidade que o Prospecto mora
-    * @param string $estado Estado que o Prospecto mora
-    * @param string $cep CEP da cidade ou endereço do Prospecto
+    * Recebe um objeto do tipo Prospect, verifica se é para salvar ou alterar
+    * e envia para a DAO executar a operação solicitada
+    *
+    * @param Prospect $prospect Objeto do tipo usuário
+    * @return TRUE|Exception Retorna TRUE caso a operação tenha sido bem sucedida e Exception, caso não tenha.
+    */
+   public function salvarProspect($prospect){
+      $daoProspect = new DAOProspect();
+      if($prospect->id === null){
+         /**
+          * Captura a exceção retornada pelo DAO no caso de falha ao incluir prospect
+          * e dispara outra exceção para ser tratada por quem chamar a função
+          */
+         try{
+            $daoProspect->inserirProspect($prospect->nome, $prospect->cpf, $prospect->email, $prospect->telefone,
+            $prospect->whatsapp, $prospect->rua, $prospect->numero, $prospect->facebook, $prospect->bairro,
+            $prospect->cidade, $prospect->estado, $prospect->cep);
+            return TRUE;
+         }catch(\Exception $e){
+            throw new \Exception($e->getMessage());
+         }
+      }else{
+          /**
+          * Captura a exceção retornada pelo DAO no caso de falha ao atualizar prospect
+          * e dispara outra exceção para ser tratada por quem chamar a função
+          */
+         try{
+            $daoProspect->editarProspect($prospect->id, $prospect->nome, $prospect->cpf, $prospect->email, $prospect->telefone,
+            $prospect->whatsapp, $prospect->rua, $prospect->numero, $prospect->facebook, $prospect->bairro,
+            $prospect->cidade, $prospect->estado, $prospect->cep);
+            unset($daoProspect);
+            return TRUE;
+         }catch(\Exception $e){
+            throw new \Exception($e);
+         }
+      }
+   }
+   /**
+    * Recebe um objeto do tipo Prospect e envia para a DAO concluir a exclusão
+    *
+    * @param Prospect $prospect Objeto Prospect informando o código do prospect a ser excluído
     * @return TRUE|Exception Retorna TRUE caso a inclusão tenha sido bem sucedida
     * ou uma Exception caso não tenha.
     */
-   public function salvarProspect($nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep){
-        $daoProspect = new DAOProspect();
+   public function excluirProspect($prospect){
+      $daoProspect = new DAOProspect();
+      /**
+       * Captura a exceção retornada pelo DAO no caso de falha ao excluir prospect
+       * e dispara outra exceção para ser tratada por quem chamar a função
+       */
       try{
-         $prospect = $daoProspect->inserirProspect($nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep);
+         $daoProspect->deletarProspect($prospect->id);
          unset($daoProspect);
-         return $prospect;
+         return TRUE;
       }catch(\Exception $e){
          throw new \Exception($e->getMessage());
       }
    }
-   
-   /**
-     * Faz o controle da alteração dos dados de um prospecto no sistema
-     * @param string $nome Nome do Prospecto
-     * @param string $cpf CPF do Prospecto
-     * @param string $email E-mail do Prospecto
-     * @param string $telefone Telefone do Prospecto
-     * @param string $whatsapp WhatsApp do Prospecto
-     * @param string $rua Endereço do Prospecto
-     * @param string $numero Número da casa ou apartamento
-     * @param string $facebook Facebook do Prospecto
-     * @param string $bairro Bairro que o Prospecto mora
-     * @param string $cidade Cidade que o Prospecto mora
-     * @param string $estado Estado que o Prospecto mora
-     * @param string $cep CEP da cidade ou endereço do Prospecto
-     * @param int $id Id do Prospecto a ser editado
-     * @return TRUE|Exception TRUE inclusao bem sucedida ou Exception se não for bem sucedida
-     */
-    public function alterarProspect($nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep, $id){
-        $daoProspect = new DAOProspect();
- 
-      try{
-         $prospect = $daoProspect->editarProspect($nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep, $id);
-         unset($daoProspect);
-         return TRUE;
-      }catch(\Exception $e){
-         throw new \Exception($e->getMessage());
-      }
-    }
-
-    /**
-     * Faz o controle da busca de um Prospecto pelo seu email cadastrado no sistema
-     * @param string $email E-mail do Prospecto
-     * @return Prospect retorna um array de objetos com os dados do Prospecto
-     */
-    public function procurarProspect(){
-       $daoProspect = new DAOProspect();
-
-       try{
-         $prospect = $daoProspect->buscarProspect($email=null);
-         unset($daoProspect);
-         return $prospect;
-      }catch(\Exception $e){
-         throw new \Exception($e->getMessage());
-      }
-    }
-
-    public function excluirProspect($id){
-       $daoProspect = new DAOProspect();
-
-       try{
-         $prospect = $daoProspect->deletarProspect($id);
-         unset($daoProspect);
-         return TRUE;
-      }catch(\Exception $e){
-         throw new \Exception($e->getMessage());
-      }
-    }
+   public function buscarProspects($email=null){
+     $daoProspect = new DAOProspect();
+     $prospects = array();
+     if($email === null){
+        $prospects = $daoProspect->buscarProspect();
+        return $prospects;
+     }else{
+        $prospects = $daoProspect->buscarProspect($email);
+        return $prospects;
+     }
+   }
 }
 ?>

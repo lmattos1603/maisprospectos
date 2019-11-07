@@ -54,6 +54,7 @@ class DAOProspect{
     }
     /**
      * Faz a edição dos dados de um prospecto no sistema
+     * @param int $id Id do Prospecto a ser editado
      * @param string $nome Nome do Prospecto
      * @param string $cpf CPF do Prospecto
      * @param string $email E-mail do Prospecto
@@ -66,22 +67,21 @@ class DAOProspect{
      * @param string $cidade Cidade que o Prospecto mora
      * @param string $estado Estado que o Prospecto mora
      * @param string $cep CEP da cidade ou endereço do Prospecto
-     * @param int $id Id do Prospecto a ser editado
      * @return TRUE|Exception TRUE inclusao bem sucedida ou Exception se não for bem sucedida
      */
-    public function editarProspect($nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep, $id){
+    public function editarProspect($id, $nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep){
         try{
             $conexaoDB = $this->conectarBanco(); // recebe um objeto de conexão.
         }catch(\Exception $e){
             die($e->getMessage());
         }
-
+        
         $sqlUpdate = $conexaoDB->prepare("update prospect set 
                                         nome = ?, cpf = ?, email = ?, telefone = ?, whatsapp = ?, rua = ?,
                                         numero = ?, facebook = ?, bairro = ?, cidade = ?, estado = ?, cep = ?
                                         where
                                         id = ?");  // recebe os dados sem abrir brecha para SQLInjection.
-        $sqlUpdate->bind_param("ssssssssssssi", $nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep, $id);
+        $sqlUpdate->bind_param("issssssssssss", $id, $nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep);
 
         $sqlUpdate->execute();  // executa o sqlUpdate.
         if(!$sqlUpdate->error){  // verifica se dá algum erro no sqlInsert.

@@ -1,6 +1,9 @@
 <?php
 namespace CONTROLLERS;
-require_once('../DAO/DAOUsuario.php');
+
+$separador = DIRECTORY_SEPARATOR;
+$root = $_SERVER['DOCUMENT_ROOT'].$separador;
+require_once($root.'maisprospectos/DAO/DAOUsuario.php');
 use DAO\DAOUsuario;
 /**
  * Esta classe é responsável por fazer o tratamento dos dados para apresentação e/ou
@@ -31,17 +34,18 @@ class ControllerUsuario{
     * @param string $email Email do usuário
     * @param string $login Login do usuário
     * @param string $senha Senha do usuário
+    * @param string $celuar Celular do usuário
     * @return TRUE|Exception Retorna TRUE caso a inclusão tenha sido bem sucedida
     * ou uma Exception caso não tenha.
     */
-   public function salvarUsuario($nome, $email, $login, $senha){
+   public function salvarUsuario($nome, $login, $senha, $email, $celular){
       $daoUsuario = new DAOUsuario();
       /**
        * Captura a exceção retornada pela DAO no caso de falha ao incluir um usuário
        * e dispara outra exceção para ser tratada por quem chamar esta função
        */
       try{
-         $retorno = $daoUsuario->incluirUsuario($nome, $email, $login, $senha);
+         $retorno = $daoUsuario->incluirUsuario($nome, $login, $senha, $email, $celular);
          unset($daoUsuario);
          return $retorno;
       }catch(\Exception $e){
