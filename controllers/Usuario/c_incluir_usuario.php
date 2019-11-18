@@ -16,7 +16,7 @@
         try{
             $ctrlUsuario = new ControllerUsuario();
             $usuario = $ctrlUsuario->salvarUsuario($nome, $login, $senha, $email, $celular);
-
+            
             $_SESSION['cadastroOk'] = "Usuário cadastrado com sucesso!";
             header("Location: ../../index.php");
         }catch(\Exception $e){

@@ -41,10 +41,13 @@
                 if(isset($_SESSION['erroLogin'])){
                     echo $_SESSION['erroLogin'];
                     unset($_SESSION['erroLogin']);
+                }elseif(isset($_SESSION['logout'])){
+                    echo $_SESSION['logout'];
+                    unset($_SESSION['logout']);
                 }
             ?>
-            <p class="text-center"><a href="views/Usuarios/v_incluir_usuario.php">Cadastre-se</a></p>
-            <p class="text-center text-danger"></p>
+            <!--<p class="text-center"><a href="views/Usuarios/v_incluir_usuario.php">Cadastre-se</a></p>
+            <p class="text-center text-danger"></p>-->
         </div>
     </body>
 </html>

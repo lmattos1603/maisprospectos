@@ -1,8 +1,9 @@
 <?php
 namespace DAO;
 mysqli_report(MYSQLI_REPORT_STRICT);
-
-require_once('../models/Prospect.php');
+$separador = DIRECTORY_SEPARATOR;
+$root = $_SERVER['DOCUMENT_ROOT'].$separador;
+require_once($root.'maisprospectos/models/Prospect.php');
 use MODELS\Prospect;
 
 /**
@@ -54,7 +55,6 @@ class DAOProspect{
     }
     /**
      * Faz a edição dos dados de um prospecto no sistema
-     * @param int $id Id do Prospecto a ser editado
      * @param string $nome Nome do Prospecto
      * @param string $cpf CPF do Prospecto
      * @param string $email E-mail do Prospecto
@@ -67,9 +67,10 @@ class DAOProspect{
      * @param string $cidade Cidade que o Prospecto mora
      * @param string $estado Estado que o Prospecto mora
      * @param string $cep CEP da cidade ou endereço do Prospecto
+     * @param int $id Id do Prospecto a ser editado
      * @return TRUE|Exception TRUE inclusao bem sucedida ou Exception se não for bem sucedida
      */
-    public function editarProspect($id, $nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep){
+    public function editarProspect($nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep, $id){
         try{
             $conexaoDB = $this->conectarBanco(); // recebe um objeto de conexão.
         }catch(\Exception $e){
@@ -81,7 +82,7 @@ class DAOProspect{
                                         numero = ?, facebook = ?, bairro = ?, cidade = ?, estado = ?, cep = ?
                                         where
                                         id = ?");  // recebe os dados sem abrir brecha para SQLInjection.
-        $sqlUpdate->bind_param("issssssssssss", $id, $nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep);
+        $sqlUpdate->bind_param("ssssssssssssi", $nome, $cpf, $email, $telefone, $whatsapp, $rua, $numero, $facebook, $bairro, $cidade, $estado, $cep, $id);
 
         $sqlUpdate->execute();  // executa o sqlUpdate.
         if(!$sqlUpdate->error){  // verifica se dá algum erro no sqlInsert.

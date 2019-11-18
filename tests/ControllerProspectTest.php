@@ -1,11 +1,21 @@
 <?php
 namespace test;
-require_once('../uteis/vendor/autoload.php');
+$separador = DIRECTORY_SEPARATOR;
+$root = $_SERVER['DOCUMENT_ROOT'].$separador;
+require_once($root.'maisprospectos/uteis/vendor/autoload.php');
+require_once($root.'maisprospectos/models/Prospect.php');
+require_once($root.'maisprospectos/controllers/Prospect/prospectController.php');
+use DAO\DAOProspect;
+use PHPUnit\Framework\TestCase;
+use models\Prospect;
+use controllers\ControllerProspect;
+
+/*require_once('../uteis/vendor/autoload.php');
 require_once('../models/Prospect.php');
 require_once('../controllers/Prospect/prospectController.php');
 use PHPUnit\Framework\TestCase;
 use models\Prospect;
-use controllers\ControllerProspect;
+use controllers\ControllerProspect;*/
 
 class ControllerProspectTest extends TestCase{
    /** @test */
@@ -27,12 +37,12 @@ class ControllerProspectTest extends TestCase{
     public function alterarProspect(){
       $ctrlProspect = new ControllerProspect();
       $prospect = new Prospect();
-      $prospect->addProspecto(14, 'Lucas', 'cpf', 'email', 'telefone', 'whatsapp', 'rua', 'numero', 'facebook', 
+      $prospect->addProspecto(21, 'Lucas', 'cpf', 'email', 'telefone', 'whatsapp', 'rua', 'numero', 'facebook', 
                              'bairro', 'cidade', 'estado', 'cep');
       try{
          $this->assertEquals(
             TRUE,
-            $ctrlProspect->salvarProspect($prospect)
+            $ctrlProspect->editProspect($prospect)
          );
       }catch(\Exception $e){
          $this->fail($e->getMessage());

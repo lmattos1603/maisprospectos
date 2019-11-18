@@ -22,7 +22,8 @@ require_once('DAOProspect.php');
 use DAO\DAOProspect;
 $daoProspect = new DAOProspect();
 try{
-    $daoProspect->buscarProspect("email");
+    $daoProspect->editarProspect("21", "Lucas", "cpf", "email", "telefone", "whatsapp", "rua", "numero", "facebook", 
+    "bairro", "cidade", "estado", "cep");
 }catch(\Exception $e){
     die($e->getMessage());
 }
